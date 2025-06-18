@@ -48,6 +48,8 @@ model Like {
   likeId Int
   likedPost Post @relation(fields: [likedPostId], references: [id]) // which post liked
   likedPostId Int
+
+  @@unique([likeId, likedPostId])
 }
 
 model Comments {
