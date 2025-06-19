@@ -10,7 +10,7 @@ interface userRequest extends Request {
     email?: string
 }
 
-router.post('/post/createPost', verifyJWT, async(req: userRequest, res: Response) => {
+router.post('/createPost', verifyJWT, async(req: userRequest, res: Response) => {
     const {title, description} = req.body as {
         title: string, 
         description: string
@@ -56,7 +56,7 @@ router.post('/post/createPost', verifyJWT, async(req: userRequest, res: Response
     
 })
 
-router.post('/post/comment/:postId', verifyJWT, async(req: userRequest, res: Response) => {
+router.post('/comment/:postId', verifyJWT, async(req: userRequest, res: Response) => {
     const {content} = req.body as {
         content: string
     }
@@ -103,7 +103,7 @@ router.post('/post/comment/:postId', verifyJWT, async(req: userRequest, res: Res
     
 })
 
-router.post('/post/like/:postId', verifyJWT, async(req: userRequest, res: Response) => {
+router.post('/like/:postId', verifyJWT, async(req: userRequest, res: Response) => {
 
     const postId = parseInt(req.params.postId)
     const likedBy = req.userId;
@@ -204,7 +204,7 @@ router.post('/post/like/:postId', verifyJWT, async(req: userRequest, res: Respon
 })
 
 
-router.delete('/post/deletePost/:postId', verifyJWT, async(req: userRequest, res: Response) => {
+router.delete('/deletePost/:postId', verifyJWT, async(req: userRequest, res: Response) => {
 
     const deleter = req.userId;
     // console.log("Request Parameters:", req.params);

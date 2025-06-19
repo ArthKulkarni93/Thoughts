@@ -4,7 +4,7 @@ import http from 'http';
 import cors from 'cors';
 const env = require('dotenv').config();
 const auth = require('./auth/auth');
-import route from './actions/route'
+import route from './actions/action'
 const PORT = process.env.PORT;
 
 
