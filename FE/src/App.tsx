@@ -1,11 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css'
+import { ReactLenis, useLenis } from 'lenis/react'
 import LandingPage from "./Pages/LandingPage";
 import Home from "./Pages/Home";
 
 function App() {
+  const lenis = useLenis((lenis) => {
+    // for smooth scroll
+    // console.log(lenis)
+  })
   return (
     <div className="">
+      <ReactLenis root />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={ <LandingPage/> } />

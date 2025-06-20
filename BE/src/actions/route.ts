@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '../../generated/prisma';
-import { verifyJWT } from '../auth/middlewares/authMiddleware';
+import { validateMsg, verifyJWT } from '../auth/middlewares/authMiddleware';
 import { SubscriptionContextImpl } from 'twilio/lib/rest/events/v1/subscription';
+import { request } from 'http';
+import { SubscribedTrackListInstance } from 'twilio/lib/rest/video/v1/room/participant/subscribedTrack';
 const router = express.Router();
 const prisma = new PrismaClient();
 
@@ -271,6 +273,30 @@ router.delete('/deletePost/:postId', verifyJWT, async(req: userRequest, res: Res
         });
     }
     
+})
+
+router.post('/msg' , validateMsg, async(req: userRequest, res: Response) => {
+    try {
+        const { email, msg } = req.body as { email: string, msg: string }
+
+        const done = await prisma.msg.create({
+            data: {
+                email,
+                msg
+            }
+        })
+
+        res.json({
+            msg: "Successfully submited the msg",
+            success: true
+        })
+    } catch (error) {
+        console.error("Database error submitting msg:", error);
+        res.status(500).json({
+            msg: "Failed to submit the msg due to an internal server error.",
+            success: false,
+        });
+    }
 })
 
 export default router;

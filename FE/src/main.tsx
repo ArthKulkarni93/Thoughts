@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+// import '@studio-freight/lenis/dist/lenis.min.css'; // Add this line for Lenis CSS
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(

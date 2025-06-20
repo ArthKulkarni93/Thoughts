@@ -1,5 +1,5 @@
 import express, {Request, Response, NextFunction} from 'express';
-import { verifyJWT } from '../auth/middlewares/authMiddleware';
+import { verifyAdmin, verifyJWT } from '../auth/middlewares/authMiddleware';
 import { PrismaClient } from '../../generated/prisma';
 import { SubscriptionContextImpl } from 'twilio/lib/rest/events/v1/subscription';
 
@@ -174,6 +174,33 @@ router.get("/account/:userId", verifyJWT, async(req: userRequest, res: Response)
         console.error("Database error retrieving user profile:", error);
         res.status(500).json({
             msg: "Failed to retrieve user profile due to an internal server error.",
+            success: false,
+        });
+        return;
+    }
+})
+
+router.get("/msg", verifyJWT, verifyAdmin, async(req: userRequest, res: Response) => {
+    
+    try {
+
+        const post = await prisma.msg.findMany({
+            orderBy: {
+                createdAt: 'desc' 
+            }
+        })
+
+
+        res.json({
+            msg: "Successfully got the post",
+            success: true,
+            post
+        })
+
+    } catch (error) {
+        console.error("Database error retrieving msgs:", error);
+        res.status(500).json({
+            msg: "Failed to retrieve msgs due to an internal server error.",
             success: false,
         });
         return;
