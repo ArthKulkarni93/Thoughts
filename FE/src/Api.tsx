@@ -9,3 +9,6 @@ const getPosts = "/get/bulkposts/trending" //not pushed
 const getPosts2 = "get/bulkposts/new" //not pushed
 const post = "get/post/:postId"
 const user = "get/account/:userId"
+
+//Feedback msg
+const feedbackMsg = "http://localhost:4001/api/v1/post/msg/"
