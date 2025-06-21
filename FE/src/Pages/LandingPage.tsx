@@ -1,7 +1,7 @@
 // Remaining -->
 // waitlist, feedbackMsg, navbar(animation + designing + fixed), colorfull, adding interfaces to show how it looks inside
 
-import Navbar from "../components/layout/Navbar";
+import Navbar from "../components/layout/Navbar"
 import CTA from "../components/Blocks/CTA";     
 import TrustPoints from "../components/Blocks/TrustPoints";
 import ImageCards from "../components/Blocks/ImageCards";
