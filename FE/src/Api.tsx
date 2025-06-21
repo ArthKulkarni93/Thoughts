@@ -1,14 +1,14 @@
 const main = "http://localhost:4001/api/v1"
 
 //User auth
-const userSignup = "/user/signup"
-const userSignin = "/user/signin"
+export const userSignup = `${main}/auth/user/signup`
+export const userSignin = `${main}/auth/user/signin`
 
 //User action
-const getPosts = "/get/bulkposts/trending" //not pushed
-const getPosts2 = "get/bulkposts/new" //not pushed
-const post = "get/post/:postId"
-const user = "get/account/:userId"
+export const getPosts = `${main}/get/bulkposts/trending` //not pushed
+export const getPosts2 = `${main}get/bulkposts/new`//not pushed
+export const post = `${main}/get/post/:postId`
+export const user = `${main}/get/account/:userId`
 
 //Feedback msg
-const feedbackMsg = "http://localhost:4001/api/v1/post/msg/"
+export const feedbackMsg = `${main}/post/msg/`

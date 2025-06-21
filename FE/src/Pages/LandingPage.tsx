@@ -35,15 +35,6 @@ export default function LandingPage() {
       </section>
 
       <Feature/>
-      {/* <section className="mt-28 px-6">
-        <Heading>Powerful Features. Effortless Creation.</Heading>
-        <ul className="mt-6 space-y-4 text-gray-800">
-          <li>✨ <strong>You Own Everything</strong> - A minimalist editor designed to let your ideas flow without interruption.</li>
-          <li>💬 <strong>You Own Everything</strong> - Connect with your readers through thoughtful comments and likes.</li>
-          <li>📥 <strong>You Own Everything</strong> - You decide when to publish and manage your posts freely.</li>
-          <li>🌐 <strong>You Own Everything</strong> - Get discovered by readers through profiles and the public feed.</li>
-        </ul>
-      </section> */}
 
       <section className="mt-32 px-6">
         <Heading level={2}>Now, I think you're ready to truly amplify your <span className="font-['Dancing_Script']">Thoughts</span>.</Heading>
