@@ -1,9 +1,7 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '../../generated/prisma';
 import { validateMsg, verifyJWT } from '../auth/middlewares/authMiddleware';
-import { SubscriptionContextImpl } from 'twilio/lib/rest/events/v1/subscription';
 import { request } from 'http';
-import { SubscribedTrackListInstance } from 'twilio/lib/rest/video/v1/room/participant/subscribedTrack';
 const router = express.Router();
 const prisma = new PrismaClient();
 

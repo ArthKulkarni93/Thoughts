@@ -1,7 +1,7 @@
 import express, {Request, Response, NextFunction} from 'express';
 import { verifyAdmin, verifyJWT } from '../auth/middlewares/authMiddleware';
 import { PrismaClient } from '../../generated/prisma';
-import { SubscriptionContextImpl } from 'twilio/lib/rest/events/v1/subscription';
+
 
 const router = express.Router();
 const prisma = new PrismaClient();
