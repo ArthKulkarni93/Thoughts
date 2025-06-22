@@ -18,6 +18,10 @@ wss.on("connection", (ws: WebSocket) => {
 
 })
 
+app.get("/", (req, res) => {
+    res.send("hi")
+})
+
 app.use('/api/v1/auth', auth);
 app.use('/api/v1', route);
 
