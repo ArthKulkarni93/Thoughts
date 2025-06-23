@@ -19,7 +19,7 @@ export default function Signup() {
             if (res && res.success) {
                 navigate('/home');
             } else {
-                console.error("Signup failed:", res ? res.msg : "Unknown error or missing success property");
+                console.error("Signup failed:", res ? res : "Unknown error or missing success property");
             }
         } catch (error) {
             console.error("An error occurred during signup:", error);

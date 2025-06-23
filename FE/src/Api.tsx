@@ -5,10 +5,11 @@ export const userSignup = `${main}/auth/user/signup`
 export const userSignin = `${main}/auth/user/signin`
 
 //User action
-export const getPosts = `${main}/get/bulkposts/trending` //not pushed
-export const getPosts2 = `${main}get/bulkposts/new`//not pushed
-export const post = `${main}/get/post/:postId`
-export const user = `${main}/get/account/:userId`
+export const getPosts = `${main}/get/bulkposts` 
+export const getPost = `${main}/get/post`
+export const getUser = `${main}/get/account/:userId`
+export const like = `${main}/post/like`
+export const createPost = `${main}/post/createPost`
 
 //Feedback msg
 export const feedbackMsg = `${main}/post/msg/`

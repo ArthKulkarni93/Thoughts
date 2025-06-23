@@ -65,7 +65,8 @@ export const useUserStore = create(
                 return {success: true}
               }
               else {
-                console.log(res.data.msg);
+                console.log(res)
+                // console.log(res.data.msg);
                 return {success: false}
               }
             } catch (error) {

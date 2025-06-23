@@ -5,6 +5,7 @@ import LandingPage from "./Pages/LandingPage";
 import Login from './Pages/Login'
 import Home from "./Pages/Home";
 import Signup from "./Pages/Signup";
+import Post from "./Pages/Post";
 
 function App() {
   const lenis = useLenis((lenis) => {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/Home" element= { <Home/> } />
           <Route path="/Login" element = { <Login/> } />
           <Route path="/Signup" element = { <Signup/> } />
+          <Route path="/Post/:postId" element={<Post />} />
         </Routes>
       </BrowserRouter>
     </div>
