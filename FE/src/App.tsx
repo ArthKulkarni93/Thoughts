@@ -4,6 +4,7 @@ import { ReactLenis, useLenis } from 'lenis/react'
 import LandingPage from "./Pages/LandingPage";
 import Login from './Pages/Login'
 import Home from "./Pages/Home";
+import Signup from "./Pages/Signup";
 
 function App() {
   const lenis = useLenis((lenis) => {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={ <LandingPage/> } />
           <Route path="/Home" element= { <Home/> } />
           <Route path="/Login" element = { <Login/> } />
+          <Route path="/Signup" element = { <Signup/> } />
         </Routes>
       </BrowserRouter>
     </div>

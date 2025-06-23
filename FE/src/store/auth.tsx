@@ -2,9 +2,8 @@ import { create } from "zustand";
 import { persist, combine } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import axios from "axios";
-import { userSignin } from "../Api";
+import { userSignin, userSignup } from "../Api";
 
-const BASE_URL = "http://localhost:4001/api/v1";
 
 type User = {
   email: string;
@@ -18,7 +17,8 @@ type State = {
 };
 
 type Actions = {
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<{success: boolean}>;
+  signup: (email: string, password: string, username: string) => Promise<{success: boolean}>;
   logout: () => void;
 };
 
@@ -43,14 +43,36 @@ export const useUserStore = create(
                   user: res.data.user,
                   token: res.data.token,
                 }));
+                return {success: true}
               } else {
                 console.log(res.data.msg);
+                return {success: false}
               }
             } catch (error) {
               console.log("problem, try again");
+              return {success: false}
             }
           },
+          signup: async(email, password, username) => {
+            try {
+              const res = await axios.post(userSignup, {email, password, username})
 
+              if(res && res.data.success) {
+                set((state) => ({
+                  user: res.data.user,
+                  token: res.data.token
+                }));
+                return {success: true}
+              }
+              else {
+                console.log(res.data.msg);
+                return {success: false}
+              }
+            } catch (error) {
+              console.log("problem in signup, try again")
+              return {success: false}
+            }
+          },
           logout: () => {
             set(() => ({
               user: null,

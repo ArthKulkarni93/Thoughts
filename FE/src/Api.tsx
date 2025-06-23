@@ -1,4 +1,4 @@
-const main = "http://localhost:4001/api/v1"
+const main = "https://thoughts-wi2c.onrender.com/api/v1"
 
 //User auth
 export const userSignup = `${main}/auth/user/signup`
