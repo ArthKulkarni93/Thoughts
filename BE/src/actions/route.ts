@@ -98,6 +98,7 @@ router.post('/comment/:postId', verifyJWT, async(req: userRequest, res: Response
         res.status(500).json({
             msg: "Failed to create comment due to an internal server error.",
             success: false,
+            error
         });
     }
     
