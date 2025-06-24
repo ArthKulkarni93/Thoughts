@@ -5,7 +5,7 @@ import LandingPage from "./Pages/LandingPage";
 import Login from './Pages/Login'
 import Home from "./Pages/Home";
 import Signup from "./Pages/Signup";
-import Post from "./Pages/Post";
+import Post from "./Pages/PostPage";
 
 function App() {
   const lenis = useLenis((lenis) => {

@@ -2,70 +2,24 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { getPosts, createPost } from "../Api";
 import { useUserStore } from "../store/auth";
-import Posts from "../components/Blocks/Posts";
+import Posts from "../components/Blocks/PostsList";
 import { useNavigate } from "react-router-dom";
-
-interface PostAuthor {
-    id: number;
-    username: string;
-}
-
-interface PostCounts {
-    like: number; 
-    comments: number;
-}
-
-interface PostData {
-    author: PostAuthor;
-    authorId: number;
-    comments: any[]; 
-    createdAt: string; 
-    description: string;
-    id: number;
-    picture: string | null; 
-    title: string;
-    _count: PostCounts;
-}
-
-
-interface CreatePostResponse {
-    msg: string;
-    post: PostData;
-    success: boolean;
-}
+import { usePostStore } from "../store/postsZustand";
 
 export default function Home() {
-  const [postType, setPostType] = useState<"new" | "trending">("new");
-  const [posts, setPosts] = useState<PostData[]>([]);
-  const [page] = useState(1);
-  const [pageSize] = useState(10);
+  const posts = usePostStore(state => state.posts);
+  const postType = usePostStore(state => state.postType);
+  const setPostType = usePostStore(state => state.setPostType);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const token = useUserStore((state) => state.token);
   const navigate = useNavigate();
+  const fetchPosts = usePostStore(state => state.fetchPosts)
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        console.log('Fetching posts for type:', postType)
-        const res = await axios.get(
-          `${getPosts}?page=${page}&pageSize=${pageSize}&type=${postType}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(res.data);
-        setPosts(res.data.posts);
-      } catch (err) {
-        console.error("Error fetching posts:", err);
-      }
-    };
-
     fetchPosts();
-  }, [postType, page, pageSize, token]);
+  }, [postType]);
 
   const handleCreatePost = async () => {
     try {
@@ -118,7 +72,7 @@ export default function Home() {
       >
         +
       </button>
-
+{/* create post */}
       {isFormOpen && (
         <div className="fixed bottom-20 right-10 h-[45vh] w-[40vh] bg-indigo-800 border border-black p-4 rounded-xl">
           <div className="flex flex-col space-y-4">
@@ -144,9 +98,10 @@ export default function Home() {
         </div>
       )}
 
+{/* render all post using PostList/tsx */}
       <div className="mt-4">
         {posts.length > 0 ? (
-          <Posts posts={posts} />
+          <Posts />
         ) : (
           <div className="text-white text-sm mt-4">Loading posts...</div>
         )}
