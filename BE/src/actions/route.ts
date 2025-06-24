@@ -57,8 +57,8 @@ router.post('/createPost', verifyJWT, async(req: userRequest, res: Response) => 
 })
 
 router.post('/comment/:postId', verifyJWT, async(req: userRequest, res: Response) => {
-    const {content} = req.body as {
-        content: string
+    const {commentString} = req.body as {
+        commentString: string
     }
 
     const commentorId = req.userId;
@@ -77,7 +77,7 @@ router.post('/comment/:postId', verifyJWT, async(req: userRequest, res: Response
     try {
         const newComment = await prisma.comments.create({
             data: {
-                content: content,
+                content: commentString,
                 commentorId: commentorId,
                 postId: postId
             },
