@@ -3,7 +3,7 @@ import { immer } from "zustand/middleware/immer";
 import { combine, persist } from "zustand/middleware";
 import { useUserStore } from "./auth";
 import axios from "axios";
-import { createPost, getPosts, getPost, like } from "../Api";
+import { createPost, getPosts, getPost, like, comment, getUser } from "../Api";
 
 type PostAuthor = {
     id: number;
@@ -35,6 +35,14 @@ type PostData = {
     _count: PostCounts | null;
 };
 
+type userData = {
+    id: number | null,
+    username: string | null,
+    email: string | null,
+    comments: commentData[] | null,
+    posts: PostData[] | null,
+}
+
 type State = {
     posts: PostData[];
     postType: "new" | "trending";
@@ -45,6 +53,8 @@ type State = {
     singlePost: PostData | null;
     loading: boolean;
     error: string | null;
+    commentString: string | null;
+    user: userData | null,
 };
 
 type Actions = {
@@ -54,6 +64,9 @@ type Actions = {
     toggleLike: (postId: number) => Promise<void>;
     setPostType: (type: "new" | "trending") => void;
     clearSinglePost: () => void;
+    commentOnPost: (postId: number, commentString: string) => Promise<void>;
+    clearCommentString: () => void;
+    getUserData: (userId: number) => Promise<void>; 
 };
 
 export const usePostStore = create(
@@ -70,6 +83,8 @@ export const usePostStore = create(
                     singlePost: null,
                     loading: false,
                     error: null,
+                    commentString: null,
+                    user: null,
                 },
                 (set, get) => ({
                     fetchPosts: async () => {
@@ -196,6 +211,69 @@ export const usePostStore = create(
                             singlePost: null
                         }))
                     },
+                    commentOnPost: async (postId, commentString) => {
+                        const token = useUserStore.getState().token;
+                        // const { commentString } = get()
+                        set({ loading: true, error: null })
+
+                        try {
+                            const res = await axios.post(`${comment}/${postId}`, { commentString }, {
+                                headers: { Authorization: `Bearer ${token}` }
+                            })
+
+                            if (res.data.success) {
+                                set((state) => ({
+                                    singlePost: state.singlePost && state.singlePost.comments
+                                        ? {
+                                            ...state.singlePost,
+                                            comments: [...state.singlePost.comments, res.data.comment],
+                                            _count: state.singlePost._count
+                                                ? {
+                                                    ...state.singlePost._count,
+                                                    comments: state.singlePost._count.comments + 1
+                                                }
+                                                : state.singlePost._count
+                                        }
+                                        : state.singlePost,
+                                    loading: false,
+                                    commentString: null
+                                }))
+                            } else {
+                                console.log(`problem in commenting`)
+                                set({ loading: false, error: "Failed to comment" })
+                            }
+                        } catch (error) {
+                            set({ loading: false, error: "Failed to comment" })
+                        }
+                    }, 
+                    getUserData: async(userId) => {
+                        const token = useUserStore.getState().token;
+                        set({ loading: true, error: null })
+                        try {
+                            const res = await axios.get(`${getUser}/${userId}`, {
+                                headers: {
+                                    Authorization: `Bearer ${token}`
+                                }
+                            })
+                            if(res.data.success) {
+                                set((state) => ({
+                                    // id: userId,
+                                    user: res.data.user
+                                }))
+                            } else {
+                                console.log(`problem in getting user`)
+                                set({ loading: false, error: "Failed to get user" })
+                            }
+                            console.log(res.data)
+                        } catch (error) {
+                            set({ loading: false, error: "Failed to get user" })
+                        }
+                    },
+                    clearCommentString: () => {
+                        set((state) => ({
+                            commentString: null
+                        }))
+                    }
                 })
             )
         ),

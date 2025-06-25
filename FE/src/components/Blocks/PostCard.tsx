@@ -28,7 +28,7 @@ export default function PostCard({ post }: PostCardProps) {
         {post.description.slice(0, 12) + "..."}
       </div>
 
-      <div className="w-[25vw] flex justify-between ">
+      <div className="w-[25vw] flex justify-between  ">
         <button onClick={() => toggleLike(post.id)}>{post._count.like}</button>
         <div>{post._count.comments}</div>
       </div>
